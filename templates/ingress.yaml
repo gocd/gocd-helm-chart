@@ -1,6 +1,7 @@
-{{- if .Values.ingress.enabled -}}
+{{- if .Values.server.ingress.enabled -}}
 {{- $serviceName := include "fullname" . -}}
-{{- $servicePort := .Values.service.externalHttpPort -}}
+{{- $serviceHttpPort := .Values.server.service.httpPort -}}
+{{- $serviceHttpsPort := .Values.server.service.httpsPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -8,21 +9,15 @@ metadata:
   labels:
     app: {{ template "name" . }}
   annotations:
-    {{- range $key, $value := .Values.ingress.annotations }}
+    {{- range $key, $value := .Values.server.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
   backend:
     serviceName: {{ $serviceName }}
-    servicePort: {{ $servicePort }}
+    servicePort: {{ .Values.server.service.httpPort }}
   rules:
-    {{- range $host := .Values.ingress.hosts }}
+    {{- range $host := .Values.server.ingress.hosts }}
     - host: {{ $host }}
-      http:
-        paths:
-          - path: /
-            backend:
-              serviceName: {{ $serviceName }}
-              servicePort: {{ $servicePort }}
   {{- end -}}
 {{- end -}}

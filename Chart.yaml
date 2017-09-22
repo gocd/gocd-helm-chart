@@ -1,4 +1,4 @@
-name: GoCD
+name: gocd
 home: https://gocd.org/
 version: 0.1.0
 appVersion: 17.10.0 # need to change it to gocd-version

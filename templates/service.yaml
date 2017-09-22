@@ -5,15 +5,15 @@ metadata:
   labels:
     app: {{ template "name" . }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.server.service.type }}
   ports:
-    - port: {{ .Values.service.externalHttpPort }}
-      targetPort: {{ .Values.service.internalHttpPort }}
+    - port: {{ .Values.server.service.httpPort }}
+      targetPort: 8153
       protocol: TCP
       name: http
 
-    - port: {{ .Values.service.externalHttpsPort }}
-      targetPort: {{ .Values.service.internalHttpsPort }}
+    - port: {{ .Values.server.service.httpsPort }}
+      targetPort: 8154
       protocol: TCP
       name: https
   selector:

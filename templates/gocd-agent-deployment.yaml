@@ -5,20 +5,17 @@ metadata:
   labels:
     app: {{ template "name" . }}
 spec:
-  replicas: {{ .Values.server.replicaCount }}
+  replicas: {{ .Values.agent.replicaCount }}
   template:
     metadata:
       labels:
         app: {{ template "name" . }}
-        role: server
+        role: agent
     spec:
       containers:
-        - name: {{ .Values.server.name }}
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
-          imagePullPolicy: {{ .Values.server.image.pullPolicy }}
-          ports:
-            - containerPort: 8153
-            - containerPort: 8154
+        - name: {{ .Values.agent.name }}
+          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+          imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
