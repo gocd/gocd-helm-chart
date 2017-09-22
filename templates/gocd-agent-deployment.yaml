@@ -16,6 +16,17 @@ spec:
         - name: {{ .Values.agent.name }}
           image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
+          env:
+          - name: GO_SERVER_URL
+            value: {{ .Values.agent.goServerUrl }}
+          - name: AGENT_AUTO_REGISTER_KEY
+            value: {{ .Values.agent.agentAutoRegisterKey }}
+          - name: AGENT_AUTO_REGISTER_RESOURCES
+            value: {{ .Values.agent.agentAutoRegisterResources }}
+          - name: AGENT_AUTO_REGISTER_ENVIRONMENTS
+            value: {{ .Values.agent.agentAutoRegisterEnvironemnts }}
+          - name: AGENT_AUTO_REGISTER_HOSTNAME
+            value: {{ .Values.agent.agentAutoRegisterHostname }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}

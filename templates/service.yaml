@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "fullname" . }}
+  name: {{ .Values.server.service.name }}
   labels:
     app: {{ template "name" . }}
 spec:
@@ -9,11 +9,13 @@ spec:
   ports:
     - port: {{ .Values.server.service.httpPort }}
       targetPort: 8153
+      nodePort: {{ .Values.server.service.nodeHttpPort }}
       protocol: TCP
       name: http
 
     - port: {{ .Values.server.service.httpsPort }}
       targetPort: 8154
+      nodePort: {{ .Values.server.service.nodeHttpsPort }}
       protocol: TCP
       name: https
   selector:
