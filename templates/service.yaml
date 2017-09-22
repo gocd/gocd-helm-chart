@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "fullname" . }}
+  labels:
+    app: {{ template "name" . }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.externalHttpPort }}
+      targetPort: {{ .Values.service.internalHttpPort }}
+      protocol: TCP
+      name: http
+
+    - port: {{ .Values.service.externalHttpsPort }}
+      targetPort: {{ .Values.service.internalHttpsPort }}
+      protocol: TCP
+      name: https
+  selector:
+    app: {{ template "name" . }}
+    role: server
