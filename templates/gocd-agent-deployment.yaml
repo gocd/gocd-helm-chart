@@ -18,7 +18,11 @@ spec:
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           env:
           - name: GO_SERVER_URL
+          {{- if .Values.agent.goServerUrl }}
             value: {{ .Values.agent.goServerUrl }}
+          {{- else }}
+            value: "https://{{ .Values.server.service.name }}:{{ .Values.server.service.httpsPort }}/go"
+          {{- end }}
           - name: AGENT_AUTO_REGISTER_KEY
             value: {{ .Values.agent.agentAutoRegisterKey }}
           - name: AGENT_AUTO_REGISTER_RESOURCES
