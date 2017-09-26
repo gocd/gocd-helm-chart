@@ -1,32 +1,33 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.server.name }}
+  name: {{ .Values.server.name }}-deployment
   labels:
-    app: {{ template "name" . }}
+    app: {{ .Values.server.name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    role: server
 spec:
   replicas: {{ .Values.server.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
+        app: {{ .Values.server.name }}
+        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+        release: {{ .Release.Name }}
         role: server
     spec:
-      volumes:
-        - name: godata-vol
-          persistentVolumeClaim:
-            claimName: {{ .Values.server.persistence.name }}
       containers:
-        - name: {{ .Values.server.name }}
-          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
+        - name: {{ .Values.server.name}}
+          image: "{{ .Values.server.image.repository }}:v{{ .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           ports:
             - containerPort: 8153
             - containerPort: 8154
-          volumeMounts:
-          - name: godata-vol
-            mountPath: /godata
+
+          resources:
+{{ toYaml .Values.server.resources | indent 12 }}
     {{- if .Values.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.server.nodeSelector | indent 8 }}
     {{- end }}
