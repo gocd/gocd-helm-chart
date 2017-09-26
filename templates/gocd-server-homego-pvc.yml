@@ -1,4 +1,4 @@
-{{- if and .Values.server.persistence.homego.enabled (not .Values.server.persistence.homego.existingClaim) -}}
+{{- if and .Values.server.persistence.enabled (not .Values.server.persistence.homego.existingClaim) -}}
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
