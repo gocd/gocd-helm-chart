@@ -17,6 +17,13 @@ spec:
         release: {{ .Release.Name }}
         role: server
     spec:
+      volumes:
+        - name: godata-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.server.persistence.godata.name }}
+        - name: homego-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.server.persistence.homego.name }}
       containers:
         - name: {{ .Values.server.name}}
           image: "{{ .Values.server.image.repository }}:v{{ .Chart.AppVersion }}"
@@ -24,9 +31,11 @@ spec:
           ports:
             - containerPort: 8153
             - containerPort: 8154
-
-          resources:
-{{ toYaml .Values.server.resources | indent 12 }}
+          volumeMounts:
+          - name: godata-vol
+            mountPath: /godata
+          - name: homego-vol
+            mountPath: /home/go
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.server.nodeSelector | indent 8 }}
