@@ -12,6 +12,10 @@ spec:
         app: {{ template "name" . }}
         role: server
     spec:
+      volumes:
+        - name: godata-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.server.persistence.name }}
       containers:
         - name: {{ .Values.server.name }}
           image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
@@ -19,6 +23,9 @@ spec:
           ports:
             - containerPort: 8153
             - containerPort: 8154
+          volumeMounts:
+          - name: godata-vol
+            mountPath: /godata
     {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.nodeSelector | indent 8 }}
