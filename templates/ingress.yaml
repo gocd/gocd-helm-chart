@@ -1,7 +1,4 @@
 {{- if .Values.server.ingress.enabled -}}
-{{- $serviceName := .Values.server.service.name -}}
-{{- $serviceHttpPort := .Values.server.service.httpPort -}}
-{{- $serviceHttpsPort := .Values.server.service.httpsPort -}}
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
@@ -14,16 +11,10 @@ metadata:
     {{- end }}
 spec:
   backend:
-    serviceName: {{ $serviceName }}
+    serviceName: {{ .Values.server.name }}-service
     servicePort: {{ .Values.server.service.httpPort }}
   rules:
     {{- range $host := .Values.server.ingress.hosts }}
     - host: {{ $host }}
-      http:
-        paths:
-        - path: /
-          backend:
-            serviceName: {{ $serviceName }}
-            servicePort: {{ $serviceHttpPort }}
   {{- end -}}
 {{- end -}}
