@@ -52,6 +52,7 @@ agent:
     tag: v17.10.0
     pullPolicy: IfNotPresent
   goServerUrl:
+  # goServerUrl: "https://gocd-server-service:8154/go"
   agentAutoRegisterKey:
   agentAutoRegisterResources:
   agentAutoRegisterEnvironemnts:
