@@ -37,12 +37,20 @@ server:
         # kubernetes.io/tls-acme: "true"
     tls:
   persistence:
-    name: "gocd-pvc"
-    enabled: true
-    accessMode: ReadWriteOnce
-    size: 1Gi
-    storageClass:
-    # ExistingClaim:
+    godata:
+      name: "godata-pvc"
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClass:
+      # ExistingClaim:
+    homego:
+      name: "homego-pvc"
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClass:
+      # ExistingClaim: true
 
 agent:
   replicaCount: 1
