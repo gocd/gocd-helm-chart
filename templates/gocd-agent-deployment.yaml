@@ -21,7 +21,11 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}-agent
+          {{- if .Values.agent.image.tag }}
+          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+          {{- else }}
           image: "{{ .Values.agent.image.repository }}:v{{default .Chart.AppVersion .Values.app.version}}"
+          {{- end }}
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           resources:
 {{ toYaml .Values.server.resources | indent 12 }}
