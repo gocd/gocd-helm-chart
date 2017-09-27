@@ -24,7 +24,11 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}-server
-          image: "{{ .Values.server.image.repository }}:v{{default .Chart.AppVersion .Values.app.version}}"
+          {{- if .Values.server.image.tag }}
+          image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
+          {{- else }}
+          image: "{{ .Values.server.image.repository }}:v{{default .Chart.AppVersion .Values.app.version }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           ports:
             - containerPort: 8153

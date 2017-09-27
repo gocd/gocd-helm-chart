@@ -10,11 +10,17 @@ spec:
   ports:
     - port: {{ .Values.server.service.httpPort }}
       targetPort: 8153
+      {{- if .Values.server.service.nodeHttpPort }}
+      nodePort: {{ .Values.server.service.nodeHttpPort }}
+      {{- end}}
       protocol: TCP
       name: http
 
     - port: {{ .Values.server.service.httpsPort }}
       targetPort: 8154
+      {{- if .Values.server.service.nodeHttpsPort }}
+      nodePort: {{ .Values.server.service.nodeHttpsPort }}
+      {{- end}}
       protocol: TCP
       name: https
   selector:

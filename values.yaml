@@ -8,6 +8,7 @@ server:
   replicaCount: 1
   image:
     repository: gocd/gocd-server
+    tag: v17.10.0
     pullPolicy: IfNotPresent
   # resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
@@ -28,6 +29,9 @@ server:
     type: NodePort
     httpPort: 8153
     httpsPort: 8154
+    # nodeHttpPort:
+    # nodeHttpsPort:
+    # Provide the nodeHttpPort and nodeHttpsPort if you want the service to be exposed on specific ports. Without this, random node ports will be assigned.
   ingress:
     enabled: false
   # Used to create an Ingress record.
@@ -56,6 +60,7 @@ agent:
   replicaCount: 1
   image:
     repository: gocd/gocd-agent-alpine-3.6
+    tag: v17.10.0
     pullPolicy: IfNotPresent
   goServerUrl:
   # goServerUrl: "https://gocd-server-service:8154/go"
