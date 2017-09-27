@@ -1,21 +1,24 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.agent.name }}
+  name: {{ .Chart.Name }}-agent-deployment
   labels:
-    app: {{ template "name" . }}
+    app: {{ .Chart.Name }}-agent
+    role: agent
 spec:
   replicas: {{ .Values.agent.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ template "name" . }}
+        app: {{ .Chart.Name }}-agent
         role: agent
     spec:
       containers:
-        - name: {{ .Values.agent.name }}
-          image: "{{ .Values.agent.image.repository }}:{{ .Values.agent.image.tag }}"
+        - name: {{ .Chart.Name }}-agent
+          image: "{{ .Values.agent.image.repository }}:v{{default .Chart.AppVersion .Values.app.version}}"
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
+          resources:
+{{ toYaml .Values.server.resources | indent 12 }}
           env:
           - name: GO_SERVER_URL
           {{- if .Values.agent.goServerUrl }}
@@ -23,15 +26,24 @@ spec:
           {{- else }}
             value: "https://{{ .Values.server.service.name }}:{{ .Values.server.service.httpsPort }}/go"
           {{- end }}
+
+          {{- if .Values.agent.agentAutoRegisterKey }}
           - name: AGENT_AUTO_REGISTER_KEY
             value: {{ .Values.agent.agentAutoRegisterKey }}
+          {{- end }}
+          {{- if .Values.agent.agentAutoRegisterResources }}
           - name: AGENT_AUTO_REGISTER_RESOURCES
             value: {{ .Values.agent.agentAutoRegisterResources }}
+          {{- end }}
+          {{- if .Values.agent.agentAutoRegisterEnvironemnts }}
           - name: AGENT_AUTO_REGISTER_ENVIRONMENTS
             value: {{ .Values.agent.agentAutoRegisterEnvironemnts }}
+          {{- end }}
+          {{- if .Values.agent.agentAutoRegisterHostname }}
           - name: AGENT_AUTO_REGISTER_HOSTNAME
             value: {{ .Values.agent.agentAutoRegisterHostname }}
-    {{- if .Values.nodeSelector }}
+          {{- end }}
+    {{- if .Values.agent.nodeSelector }}
       nodeSelector:
-{{ toYaml .Values.nodeSelector | indent 8 }}
+{{ toYaml .Values.agent.nodeSelector | indent 8 }}
     {{- end }}

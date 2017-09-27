@@ -2,16 +2,17 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ .Values.server.ingress.name }}
+  name: {{ .Chart.Name }}-server-ingress
   labels:
-    app: {{ template "name" . }}
+    app: {{ .Chart.Name }}-server
+    role: server
   annotations:
     {{- range $key, $value := .Values.server.ingress.annotations }}
       {{ $key }}: {{ $value | quote }}
     {{- end }}
 spec:
   backend:
-    serviceName: {{ .Values.server.name }}-service
+    serviceName: {{ .Chart.Name }}-server-service
     servicePort: {{ .Values.server.service.httpPort }}
   rules:
     {{- range $host := .Values.server.ingress.hosts }}

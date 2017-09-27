@@ -1,8 +1,10 @@
 # Default values for gocd.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
+app:
+  version:
+
 server:
-  name: 'gocd-server'
   replicaCount: 1
   image:
     repository: gocd/gocd-server
@@ -27,17 +29,16 @@ server:
     httpPort: 8153
     httpsPort: 8154
   ingress:
-    enabled: true
-    name: 'gocd-ingress'
+    enabled: false
   # Used to create an Ingress record.
-    hosts:
-      - foo.go.cd
-    annotations:
-        # kubernetes.io/ingress.class: nginx
-        # kubernetes.io/tls-acme: "true"
-    tls:
+    # hosts:
+    #   - foo.go.cd
+    # annotations:
+    #     # kubernetes.io/ingress.class: nginx
+    #     # kubernetes.io/tls-acme: "true"
+    # tls:
   persistence:
-    enabled: true
+    enabled: false # change to true if a persistent volume is available and configured manually.
     godata:
       name: "godata-pvc"
       accessMode: ReadWriteOnce
@@ -53,10 +54,8 @@ server:
 
 agent:
   replicaCount: 1
-  name: 'gocd-agent'
   image:
     repository: gocd/gocd-agent-alpine-3.6
-    tag: v17.10.0
     pullPolicy: IfNotPresent
   goServerUrl:
   # goServerUrl: "https://gocd-server-service:8154/go"
@@ -65,6 +64,7 @@ agent:
   agentAutoRegisterEnvironemnts:
   agentAutoRegisterHostname:
 
+  # resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -75,3 +75,6 @@ agent:
   # requests:
   #  cpu: 100m
   #  memory: 128Mi
+
+  # nodeSelector: {}
+  # This is used to select which node to run the particular pod on. Remove the curly braces and adjust the node selector as necessary. This will select the node which matches the labels provided in the nodeSelector.

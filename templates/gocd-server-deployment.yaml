@@ -1,22 +1,19 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ .Values.server.name }}-deployment
+  name: {{ .Chart.Name }}-server-deployment
   labels:
-    app: {{ .Values.server.name }}
-    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-    release: {{ .Release.Name }}
+    app: {{ .Chart.Name }}-server
     role: server
 spec:
   replicas: {{ .Values.server.replicaCount }}
   template:
     metadata:
       labels:
-        app: {{ .Values.server.name }}
-        chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
-        release: {{ .Release.Name }}
+        app: {{ .Chart.Name }}-server
         role: server
     spec:
+      {{- if .Values.server.persistence.enabled }}
       volumes:
         - name: godata-vol
           persistentVolumeClaim:
@@ -24,19 +21,24 @@ spec:
         - name: homego-vol
           persistentVolumeClaim:
             claimName: {{ .Values.server.persistence.homego.name }}
+      {{- end }}
       containers:
-        - name: {{ .Values.server.name}}
-          image: "{{ .Values.server.image.repository }}:v{{ .Chart.AppVersion }}"
+        - name: {{ .Chart.Name }}-server
+          image: "{{ .Values.server.image.repository }}:v{{default .Chart.AppVersion .Values.app.version}}"
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           ports:
             - containerPort: 8153
             - containerPort: 8154
+          {{- if .Values.server.persistence.enabled }}
           volumeMounts:
           - name: godata-vol
             mountPath: /godata
           - name: homego-vol
             mountPath: /home/go
-    {{- if .Values.nodeSelector }}
+          {{- end }}
+          resources:
+{{ toYaml .Values.server.resources | indent 12 }}
+    {{- if .Values.server.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.server.nodeSelector | indent 8 }}
     {{- end }}
