@@ -13,6 +13,12 @@ spec:
         app: {{ .Chart.Name }}-agent
         role: agent
     spec:
+      {{- if .Values.agent.persistence.enabled }}
+      volumes:
+        - name: homego-vol
+          persistentVolumeClaim:
+            claimName: {{ .Values.agent.persistence.homego.name }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}-agent
           image: "{{ .Values.agent.image.repository }}:v{{default .Chart.AppVersion .Values.app.version}}"
@@ -43,7 +49,12 @@ spec:
           - name: AGENT_AUTO_REGISTER_HOSTNAME
             value: {{ .Values.agent.agentAutoRegisterHostname }}
           {{- end }}
-    {{- if .Values.agent.nodeSelector }}
+          {{- if .Values.agent.persistence.enabled }}
+          volumeMounts:
+          - name: homego-vol
+            mountPath: /home/go
+          {{- end }}
+    {{- if .Values.nodeSelector }}
       nodeSelector:
 {{ toYaml .Values.agent.nodeSelector | indent 8 }}
     {{- end }}
