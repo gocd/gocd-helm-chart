@@ -65,7 +65,7 @@ agent:
   agentAutoRegisterHostname:
 
   persistence:
-    enabled: true
+    enabled: false
     homego:
       name: "homego-agent-pvc"
       accessMode: ReadWriteOnce

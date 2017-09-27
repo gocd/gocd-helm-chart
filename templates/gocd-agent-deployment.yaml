@@ -30,7 +30,7 @@ spec:
           {{- if .Values.agent.goServerUrl }}
             value: {{ .Values.agent.goServerUrl }}
           {{- else }}
-            value: "https://{{ .Values.server.service.name }}:{{ .Values.server.service.httpsPort }}/go"
+            value: "https://{{ .Chart.Name }}-server-service:{{ .Values.server.service.httpsPort }}/go"
           {{- end }}
 
           {{- if .Values.agent.agentAutoRegisterKey }}
