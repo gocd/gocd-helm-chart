@@ -30,6 +30,11 @@ spec:
           image: "{{ .Values.server.image.repository }}:v{{default .Chart.AppVersion .Values.app.version }}"
           {{- end }}
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
+          env:
+            {{- if .Values.server.goServerSystemProperties }}
+            - name: GO_SERVER_SYSTEM_PROPERTIES
+              value: {{ .Values.server.goServerSystemProperties }}
+            {{- end }}
           ports:
             - containerPort: 8153
             - containerPort: 8154

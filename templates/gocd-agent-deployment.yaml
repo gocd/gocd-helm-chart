@@ -53,6 +53,10 @@ spec:
           - name: AGENT_AUTO_REGISTER_HOSTNAME
             value: {{ .Values.agent.agentAutoRegisterHostname }}
           {{- end }}
+          {{- if .Values.agent.goAgentSystemProperties }}
+          - name: GO_AGENT_SYSTEM_PROPERTIES
+            value: {{ .Values.agent.goAgentSystemProperties }}
+          {{- end }}
           {{- if .Values.agent.persistence.enabled }}
           volumeMounts:
           - name: homego-vol
