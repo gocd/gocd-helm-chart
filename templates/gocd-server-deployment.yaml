@@ -38,6 +38,17 @@ spec:
           ports:
             - containerPort: 8153
             - containerPort: 8154
+          livenessProbe:
+            httpGet:
+              path: /go/auth/login
+              port: 8153
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /go/auth/login
+              port: 8153
+            initialDelaySeconds: 60
           {{- if .Values.server.persistence.enabled }}
           volumeMounts:
           - name: godata-vol
