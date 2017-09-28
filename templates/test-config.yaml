@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name:  "{{ .Chart.Name }}-tests"
+data:
+  run.sh: |-
+    @test "Testing GoCD UI is accessible" {
+      {{- if .Values.agent.goServerUrl }}
+        curl --retry 12 --retry-delay 10 {{ .Values.agent.goServerUrl }}/auth/login
+      {{- else }}
+        curl --retry 12 --retry-delay 10 "http://{{ .Chart.Name }}-server-service:{{ .Values.server.service.httpPort }}/go/auth/login"
+      {{- end }}
+    }
