@@ -44,6 +44,7 @@ server:
     # tls:
   persistence:
     enabled: false # change to true if a persistent volume is available and configured manually.
+    pvName: gocd-server
     godata:
       name: "godata-pvc"
       accessMode: ReadWriteOnce
@@ -73,6 +74,7 @@ agent:
 
   persistence:
     enabled: false
+    pvName: gocd-agent
     homego:
       name: "homego-agent-pvc"
       accessMode: ReadWriteOnce

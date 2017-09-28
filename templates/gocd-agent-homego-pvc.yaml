@@ -19,5 +19,5 @@ spec:
 {{- end }}
   selector:
     matchLabels:
-      app: "gocd-agent"
+      app: {{ .Values.agent.persistence.pvName }}
 {{- end }}

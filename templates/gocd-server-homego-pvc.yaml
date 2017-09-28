@@ -19,5 +19,5 @@ spec:
 {{- end }}
   selector:
     matchLabels:
-      app: {{ .Chart.Name }}-server
+      app: {{ .Values.server.persistence.pvName }}
 {{- end }}
