@@ -16,8 +16,8 @@ spec:
   storageClassName: {{ .Values.server.persistence.homego.storageClass }}
 {{- else }}
   storageClassName: ""
-{{- end }}
   selector:
     matchLabels:
-      app: {{ .Values.server.persistence.pvName }}
+      app: {{ .Values.server.persistence.homego.pvName }}
+{{- end }}
 {{- end }}

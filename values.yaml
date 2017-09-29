@@ -44,14 +44,15 @@ server:
     # tls:
   persistence:
     enabled: false # change to true if a persistent volume is available and configured manually.
-    pvName: gocd-server
     godata:
+      pvName: godata-gocd-server
       name: "godata-pvc"
       accessMode: ReadWriteOnce
       size: 1Gi
       storageClass:
       # ExistingClaim:
     homego:
+      pvName: homego-gocd-server
       name: "homego-pvc"
       accessMode: ReadWriteOnce
       size: 1Gi
