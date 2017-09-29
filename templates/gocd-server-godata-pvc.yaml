@@ -16,8 +16,8 @@ spec:
   storageClassName: {{ .Values.server.persistence.godata.storageClass }}
 {{- else }}
   storageClassName: ""
-{{- end }}
   selector:
     matchLabels:
-      app: {{ .Values.server.persistence.pvName }}
+      app: {{ .Values.server.persistence.godata.pvName }}
+{{- end }}
 {{- end }}
