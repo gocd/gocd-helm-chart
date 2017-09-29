@@ -20,11 +20,7 @@ spec:
         name: tools
   containers:
     - name: {{ .Chart.Name }}-ui-test
-      {{- if .Values.server.image.tag }}
-      image: "{{ .Values.server.image.repository }}:{{ .Values.server.image.tag }}"
-      {{- else }}
-      image: "{{ .Values.server.image.repository }}:v{{default .Chart.AppVersion .Values.app.version }}"
-      {{- end }}
+      image: "ganeshpl/alpine-jq"
       command: ["/tools/bats/bats", "-t", "/tests/run.sh"]
       volumeMounts:
       - mountPath: /tests
