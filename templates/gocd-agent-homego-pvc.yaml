@@ -18,6 +18,6 @@ spec:
   storageClassName: ""
   selector:
     matchLabels:
-      app: {{ .Values.agent.persistence.pvName }}
+      app: {{ .Values.agent.persistence.homego.pvName }}
 {{- end }}
 {{- end }}
