@@ -25,7 +25,8 @@ server:
   # nodeSelector: {}
   # This is used to select which node to run the particular pod on. Remove the curly braces and adjust the node selector as necessary. This will select the node which matches the labels provided in the nodeSelector.
 
-  goServerSystemProperties:
+  env:
+    goServerSystemProperties:
   service:
     type: NodePort
     httpPort: 8153
@@ -65,13 +66,13 @@ agent:
     repository: gocd/gocd-agent-alpine-3.6
     tag: v17.10.0
     pullPolicy: IfNotPresent
-  goServerUrl:
-  # goServerUrl: "https://gocd-server-service:8154/go"
-  agentAutoRegisterKey:
-  agentAutoRegisterResources:
-  agentAutoRegisterEnvironemnts:
-  agentAutoRegisterHostname:
-  goAgentSystemProperties:
+  env:
+    goServerUrl:
+    agentAutoRegisterKey:
+    agentAutoRegisterResources:
+    agentAutoRegisterEnvironemnts:
+    agentAutoRegisterHostname:
+    goAgentSystemProperties:
 
   persistence:
     enabled: false

@@ -46,34 +46,34 @@ The following tables lists the configurable parameters of the GoCD chart and the
 
 ### GoCD Server
 
-| Parameter                         | Description                                                                                         | Default             |
-| --------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------- |
-| `server.replicaCount`             | GoCD Server replicas Count                                                                          | `1`                 |
-| `server.image.repository`         | GoCD server image                                                                                   | `gocd/gocd-server`  |
-| `server.image.tag`                | GoCD server image tag                                                                               | `.Chart.appVersion` |
-| `server.image.pullPolicy`         | Image pull policy                                                                                   | `IfNotPresent`      |
-| `server.goServerSystemProperties` | GoCD Server system properties                                                                       | `nil`               |
-| `server.service.type`             | Type of GoCD server Kubernetes service                                                              | `NodePort`          |
-| `server.service.httpPort`         | GoCD server service HTTP port                                                                       | `8153`              |
-| `server.service.httpsPort`        | GoCD server service HTTPS port                                                                      | `8154`              |  
-| `server.service.nodeHttpPort`     | GoCD server service node HTTP port. **Note**: A random nodePort will get assigned if not specified  | `nil`               |  
-| `server.service.nodeHttpsPort`    | GoCD server service node HTTPS port. **Note**: A random nodePort will get assigned if not specified | `nil`               |  
-| `server.ingress.enabled`          | Enable GoCD ingress.                                                                                | `false`             |  
-| `server.ingress.hosts`            | GoCD ingress hosts records.                                                                         | `nil`               |  
+| Parameter                             | Description                                                                                         | Default             |
+| ------------------------------------- | --------------------------------------------------------------------------------------------------- | ------------------- |
+| `server.replicaCount`                 | GoCD Server replicas Count                                                                          | `1`                 |
+| `server.image.repository`             | GoCD server image                                                                                   | `gocd/gocd-server`  |
+| `server.image.tag`                    | GoCD server image tag                                                                               | `.Chart.appVersion` |
+| `server.image.pullPolicy`             | Image pull policy                                                                                   | `IfNotPresent`      |
+| `server.env.goServerSystemProperties` | GoCD Server system properties                                                                       | `nil`               |
+| `server.service.type`                 | Type of GoCD server Kubernetes service                                                              | `NodePort`          |
+| `server.service.httpPort`             | GoCD server service HTTP port                                                                       | `8153`              |
+| `server.service.httpsPort`            | GoCD server service HTTPS port                                                                      | `8154`              |  
+| `server.service.nodeHttpPort`         | GoCD server service node HTTP port. **Note**: A random nodePort will get assigned if not specified  | `nil`               |  
+| `server.service.nodeHttpsPort`        | GoCD server service node HTTPS port. **Note**: A random nodePort will get assigned if not specified | `nil`               |  
+| `server.ingress.enabled`              | Enable GoCD ingress.                                                                                | `false`             |  
+| `server.ingress.hosts`                | GoCD ingress hosts records.                                                                         | `nil`               |  
 
 ### GoCD Agent
 
-| Parameter                             | Description                                     | Default                      |
-| ------------------------------------- | ----------------------------------------------- | ---------------------------- |
-| `agent.replicaCount`                  | GoCD Agent replicas Count                       | `1`                          |
-| `agent.image.repository`              | GoCD agent image                                | `gocd/gocd-agent-alpine-3.6` |
-| `agent.image.tag`                     | GoCD agent image tag                            | `.Chart.appVersion`          |
-| `agent.image.pullPolicy`              | Image pull policy                               | `IfNotPresent`               |
-| `agent.goServerUrl`                   | GoCD Server Url                                 | `nil`                        |
-| `agent.agentAutoRegisterKey`          | GoCD Agent autoregister key                     | `nil`                        |
-| `agent.agentAutoRegisterResources`    | Comma separated list of GoCD Agent resources    | `nil`                        |
-| `agent.agentAutoRegisterEnvironemnts` | Comma separated list of GoCD Agent environments | `nil`                        |
-| `agent.agentAutoRegisterHostname`     | GoCD Agent hostname                             | `nil`                        |
+| Parameter                                 | Description                                     | Default                      |
+| ----------------------------------------- | ----------------------------------------------- | ---------------------------- |
+| `agent.replicaCount`                      | GoCD Agent replicas Count                       | `1`                          |
+| `agent.image.repository`                  | GoCD agent image                                | `gocd/gocd-agent-alpine-3.6` |
+| `agent.image.tag`                         | GoCD agent image tag                            | `.Chart.appVersion`          |
+| `agent.image.pullPolicy`                  | Image pull policy                               | `IfNotPresent`               |
+| `agent.env.goServerUrl`                   | GoCD Server Url                                 | `nil`                        |
+| `agent.env.agentAutoRegisterKey`          | GoCD Agent autoregister key                     | `nil`                        |
+| `agent.env.agentAutoRegisterResources`    | Comma separated list of GoCD Agent resources    | `nil`                        |
+| `agent.env.agentAutoRegisterEnvironemnts` | Comma separated list of GoCD Agent environments | `nil`                        |
+| `agent.env.agentAutoRegisterHostname`     | GoCD Agent hostname                             | `nil`                        |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`.
 

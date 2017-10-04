@@ -31,9 +31,9 @@ spec:
           {{- end }}
           imagePullPolicy: {{ .Values.server.image.pullPolicy }}
           env:
-            {{- if .Values.server.goServerSystemProperties }}
+            {{- if .Values.server.env.goServerSystemProperties }}
             - name: GO_SERVER_SYSTEM_PROPERTIES
-              value: {{ .Values.server.goServerSystemProperties }}
+              value: {{ .Values.server.env.goServerSystemProperties }}
             {{- end }}
           ports:
             - containerPort: 8153

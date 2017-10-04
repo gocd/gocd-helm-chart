@@ -28,34 +28,34 @@ spec:
           {{- end }}
           imagePullPolicy: {{ .Values.agent.image.pullPolicy }}
           resources:
-{{ toYaml .Values.server.resources | indent 12 }}
+          {{ toYaml .Values.server.resources | indent 12 }}
           env:
           - name: GO_SERVER_URL
-          {{- if .Values.agent.goServerUrl }}
-            value: {{ .Values.agent.goServerUrl }}
+          {{- if .Values.agent.env.goServerUrl }}
+            value: {{ .Values.agent.env.goServerUrl }}
           {{- else }}
             value: "https://{{ .Chart.Name }}-server-service:{{ .Values.server.service.httpsPort }}/go"
           {{- end }}
 
-          {{- if .Values.agent.agentAutoRegisterKey }}
+          {{- if .Values.agent.env.agentAutoRegisterKey }}
           - name: AGENT_AUTO_REGISTER_KEY
-            value: {{ .Values.agent.agentAutoRegisterKey }}
+            value: {{ .Values.agent.env.agentAutoRegisterKey }}
           {{- end }}
-          {{- if .Values.agent.agentAutoRegisterResources }}
+          {{- if .Values.agent.env.agentAutoRegisterResources }}
           - name: AGENT_AUTO_REGISTER_RESOURCES
-            value: {{ .Values.agent.agentAutoRegisterResources }}
+            value: {{ .Values.agent.env.agentAutoRegisterResources }}
           {{- end }}
-          {{- if .Values.agent.agentAutoRegisterEnvironemnts }}
+          {{- if .Values.agent.env.agentAutoRegisterEnvironemnts }}
           - name: AGENT_AUTO_REGISTER_ENVIRONMENTS
-            value: {{ .Values.agent.agentAutoRegisterEnvironemnts }}
+            value: {{ .Values.agent.env.agentAutoRegisterEnvironemnts }}
           {{- end }}
-          {{- if .Values.agent.agentAutoRegisterHostname }}
+          {{- if .Values.agent.env.agentAutoRegisterHostname }}
           - name: AGENT_AUTO_REGISTER_HOSTNAME
-            value: {{ .Values.agent.agentAutoRegisterHostname }}
+            value: {{ .Values.agent.env.agentAutoRegisterHostname }}
           {{- end }}
-          {{- if .Values.agent.goAgentSystemProperties }}
+          {{- if .Values.agent.env.goAgentSystemProperties }}
           - name: GO_AGENT_SYSTEM_PROPERTIES
-            value: {{ .Values.agent.goAgentSystemProperties }}
+            value: {{ .Values.agent.env.goAgentSystemProperties }}
           {{- end }}
           {{- if .Values.agent.persistence.enabled }}
           volumeMounts:
